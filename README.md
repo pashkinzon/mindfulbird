@@ -1,4 +1,4 @@
-# Introduction to the Online Therapist Database Project
+# Mindful Bird - SQL Database Project
 
 In an ever-changing world, where stress and emotional challenges can be overwhelming, mental health and counseling 
 services play a pivotal role in supporting individuals' well-being. To cater to the growing demand for accessible therapeutic assistance,
