@@ -443,68 +443,6 @@ JOIN Clients c ON s.client_id = c.id;
 |46        |Dr. Sarah           |Ava              |Ava made progress in implementing mindfulness techniques and discussed emotional regulation.                                |The client felt more equipped to manage overwhelming emotions through mindfulness.|
 |47        |Dr. Sarah           |Ava              |Ava shared her experiences with time management and explored techniques for prioritization.                                 |The client is motivated to explore techniques for better time management.|
 |48        |Dr. Sarah           |Ava              |Ava discussed her future goals and explored potential career paths.                                                         |The client is enthusiastic about exploring career options aligned with her interests.|
-|49        |Dr. Sarah           |Ava              |Ava reflected on her therapeutic journey and expressed gratitude for the support received.                                  |The client showed growth in self-awareness and appreciation for the therapeutic process.|
-|9         |Dr. Michael         |Jane             |Jane expressed concerns about her communication with her partner. We explored ways to improve their relationship.           |The client showed vulnerability in discussing past traumas.|
-|10        |Dr. Michael         |Jane             |Jane made progress in communicating her needs. We discussed positive aspects of her relationship.                           |The client expressed feeling more connected to her partner after implementing new communication strategies.|
-|11        |Dr. Michael         |Jane             |Jane discussed challenges in implementing new communication strategies. We role-played different scenarios.                 |The client is willing to continue practicing communication techniques and exploring more scenarios.|
-|12        |Dr. Michael         |Jane             |Jane expressed feeling more satisfied with her relationship. We discussed ways to maintain positive changes.                |The client demonstrated commitment to maintaining the progress in her relationship.|
-|13        |Dr. Michael         |Jane             |Jane shared her experiences with Dr. Michael Smith and how therapy has impacted her life.                                   |The client expressed appreciation for the therapeutic support received.|
-|50        |Dr. Michael         |Liam             |Liam discussed his experiences with social anxiety and explored exposure techniques.                                        |The client demonstrated courage in facing social anxiety through exposure therapy.|
-|51        |Dr. Michael         |Liam             |Liam made progress in applying exposure techniques and discussed self-confidence.                                           |The client expressed feeling more confident in social situations after exposure therapy.|
-|52        |Dr. Michael         |Liam             |Liam shared his interests and hobbies outside of therapy and explored self-expression.                                      |The client is motivated to explore creative outlets for self-expression.|
-|14        |Dr. Jennifer        |Michael          |Michael shared memories of his late parent, and we discussed his grief journey.                                             |The client is making progress in acknowledging emotions.|
-|15        |Dr. Jennifer        |Michael          |Michael discussed memories of significant events with the late parent. We explored the emotional impact.                    |The client expressed relief after sharing emotional memories and felt understood.|
-|16        |Dr. Jennifer        |Michael          |Michael expressed mixed emotions regarding the memories shared. We processed the feelings.                                  |The client demonstrated emotional awareness and openness during the session.|
-|17        |Dr. Jennifer        |Michael          |Michael reflected on the grief journey and discussed ways to honor the late parent's memory.                                |The client is open to exploring creative ways of honoring the late parent.|
-|53        |Dr. Jennifer        |Isabella         |Isabella discussed her academic challenges and explored self-motivation techniques.                                         |The client expressed interest in techniques for maintaining motivation in academics.|
-|54        |Dr. Jennifer        |Isabella         |Isabella made progress in implementing self-motivation techniques and discussed test anxiety.                               |The client reported feeling more focused and motivated while studying.|
-|55        |Dr. Jennifer        |Isabella         |Isabella shared her extracurricular activities and explored ways to manage time effectively.                                |The client is motivated to create a balanced schedule for academics and interests.|
-|18        |Dr. David           |Emily            |Emily shared her recent experiences with social anxiety and discussed the challenges she faced.                             |The client showed bravery in sharing vulnerable experiences.|
-|19        |Dr. David           |Emily            |Emily worked on identifying negative thought patterns and explored reframing techniques.                                    |The client is interested in learning more about cognitive reframing and its potential benefits.|
-|20        |Dr. David           |Emily            |Emily discussed her progress in applying cognitive reframing techniques in real-life situations.                            |The client demonstrated a willingness to challenge negative thought patterns.|
-|21        |Dr. David           |Emily            |Emily explored her social interactions and applied assertiveness techniques.                                                |The client expressed a desire to continue practicing assertiveness in social settings.|
-|56        |Dr. David           |Benjamin         |Benjamin discussed his experiences with social interactions and explored communication skills.                              |The client is open to learning assertive communication techniques for healthier relationships.|
-|57        |Dr. David           |Benjamin         |Benjamin made progress in applying assertiveness techniques and discussed self-esteem.                                      |The client expressed feeling more empowered after practicing assertiveness in social situations.|
-|22        |Dr. Emily           |Sophia           |Sophia discussed her experiences with anxiety at school. We explored coping strategies.                                     |The client is interested in learning more about grounding exercises.|
-|23        |Dr. Emily           |Sophia           |Sophia made progress in implementing grounding exercises. We discussed managing test anxiety.                               |The client felt more centered and focused after using grounding exercises during exams.|
-|24        |Dr. Emily           |Sophia           |Sophia shared her feelings of overwhelm during the session. We practiced mindfulness techniques.                            |The client expressed experiencing relief from overwhelming emotions through mindfulness.|
-|25        |Dr. Emily           |Sophia           |Sophia discussed her extracurricular activities and explored strategies for achieving balance.                              |The client is motivated to create a balanced routine for academics and activities.|
-|26        |Dr. Emily           |Sophia           |Sophia reflected on her overall well-being and discussed ways to nurture self-compassion.                                   |The client expressed the importance of self-compassion and is committed to cultivating it.|
-|58        |Dr. Emily           |Mia              |Mia discussed her experiences with stress and explored relaxation techniques.                                               |The client expressed interest in trying mindfulness-based stress reduction.|
-|59        |Dr. Emily           |Mia              |Mia made progress in applying mindfulness techniques and discussed emotional well-being.                                    |The client reported feeling more centered and less overwhelmed after practicing mindfulness.|
-|60        |Dr. Emily           |Mia              |Mia shared her experiences with time management and explored techniques for better productivity.                            |The client is motivated to explore time-blocking strategies for increased productivity.|
-|27        |Dr. William         |William          |William discussed his experiences with attention difficulties and explored concentration techniques.                        |The client expressed relief after identifying concentration techniques that work for him.|
-|28        |Dr. William         |William          |William made progress in managing distractions and discussed time management strategies.                                    |The client is interested in exploring time-blocking techniques for better productivity.|
-|29        |Dr. William         |William          |William shared his academic challenges and explored ways to advocate for support.                                           |The client demonstrated determination in seeking academic support and accommodations.|
-|30        |Dr. William         |William          |William discussed his personal interests and explored potential career paths.                                               |The client is motivated to explore career options aligned with his passions.|
-|31        |Dr. William         |William          |William reflected on his therapeutic journey and expressed gratitude for the support received.                              |The client showed growth in self-awareness and appreciation for the therapeutic process.|
-|61        |Dr. William         |Ethan            |Ethan discussed his academic challenges and explored strategies for improved focus.                                         |The client expressed interest in learning more about concentration techniques.|
-|62        |Dr. William         |Ethan            |Ethan made progress in implementing concentration techniques and discussed test anxiety.                                    |The client reported feeling more focused and prepared during exams.|
-|63        |Dr. William         |Ethan            |Ethan shared his extracurricular interests and explored ways to maintain work-life balance.                                 |The client is motivated to create a balanced routine for academics and activities.|
-|32        |Dr. Olivia          |Olivia           |Olivia discussed her experiences with stress management and explored relaxation techniques.                                 |The client expressed interest in trying mindfulness-based stress reduction.|
-|33        |Dr. Olivia          |Olivia           |Olivia made progress in applying mindfulness techniques in daily life. We discussed self-care.                              |The client reported feeling more centered and less overwhelmed after practicing mindfulness.|
-|34        |Dr. Olivia          |Olivia           |Olivia shared her feelings of burnout and discussed ways to set healthy boundaries.                                         |The client demonstrated insight into the importance of setting boundaries for well-being.|
-|35        |Dr. Olivia          |Olivia           |Olivia discussed her hobbies and explored ways to incorporate them into her routine.                                        |The client is motivated to prioritize leisure activities and hobbies.|
-|64        |Dr. Olivia          |Amelia           |Amelia discussed her experiences with social anxiety and explored cognitive reframing.                                      |The client responded well to cognitive reframing techniques for challenging negative thoughts.|
-|65        |Dr. Olivia          |Amelia           |Amelia made progress in applying cognitive reframing and discussed assertiveness training.                                  |The client expressed feeling more confident in social interactions after assertiveness training.|
-|36        |Dr. Ethan           |James            |James discussed his experiences with self-esteem and explored cognitive-behavioral strategies.                              |The client is open to challenging negative self-talk through cognitive restructuring.|
-|37        |Dr. Ethan           |James            |James made progress in reframing negative self-beliefs and discussed assertiveness skills.                                  |The client expressed feeling more empowered after practicing assertiveness in relationships.|
-|38        |Dr. Ethan           |James            |James shared his reflections on personal growth and discussed ways to maintain progress.                                    |The client showed determination in applying therapy insights to maintain positive changes.|
-|66        |Dr. Ethan           |Oliver           |Oliver discussed his experiences with academic stress and explored time management.                                         |The client is motivated to create a study schedule for better time management.|
-|67        |Dr. Ethan           |Oliver           |Oliver made progress in implementing time management techniques and discussed test preparation.                             |The client reported feeling more organized and prepared for upcoming exams.|
-|68        |Dr. Ethan           |Oliver           |Oliver shared his interests in sports and explored strategies for managing sports commitments and academics.                |The client is motivated to find a balance between sports and academics.|
-|39        |Dr. Amelia          |Sophie           |Sophie discussed her experiences with anxiety in social settings and explored exposure techniques.                          |The client demonstrated courage in facing social anxiety through exposure therapy.|
-|40        |Dr. Amelia          |Sophie           |Sophie made progress in applying exposure techniques and discussed resilience.                                              |The client expressed feeling more confident in navigating social situations after exposure therapy.|
-|41        |Dr. Amelia          |Sophie           |Sophie shared her interests and hobbies outside of therapy and explored self-expression.                                    |The client is motivated to explore creative outlets for self-expression.|
-|69        |Dr. Amelia          |Harper           |Harper discussed her experiences with peer relationships and explored conflict resolution.                                  |The client is open to learning communication strategies for resolving conflicts.|
-|70        |Dr. Amelia          |Harper           |Harper made progress in applying conflict resolution techniques and discussed self-esteem.                                  |The client reported feeling more confident in navigating peer relationships.|
-|71        |Dr. Amelia          |Harper           |Harper shared her interests in art and explored art-based activities for emotional expression.                              |The client is motivated to use art as a form of emotional release.|
-|42        |Dr. James           |Alexander        |Alexander discussed his experiences with academic stress and explored time management.                                      |The client is open to exploring time-management strategies for better academic performance.|
-|43        |Dr. James           |Alexander        |Alexander made progress in implementing time management techniques. We discussed self-motivation.                           |The client expressed feeling more organized and self-motivated after using time management techniques.|
-|44        |Dr. James           |Alexander        |Alexander shared his extracurricular activities and explored ways to balance academics and interests.                       |The client is motivated to create a balanced schedule to pursue both academics and interests.|
-|72        |Dr. James           |Evelyn           |Evelyn discussed her experiences with managing academic and personal responsibilities.                                      |The client expressed interest in time management techniques for juggling multiple tasks.|
-|73        |Dr. James           |Evelyn           |Evelyn made progress in implementing time management strategies and discussed stress management.                            |The client reported feeling more in control of her schedule and better equipped to handle stress.|
-|74        |Dr. James           |Evelyn           |Evelyn shared her future career aspirations and explored potential pathways.                                                |The client is enthusiastic about exploring career options that align with her passions.|
 
 
 **Therapist Credentials Overview**
@@ -585,70 +523,6 @@ JOIN Therapists t ON pt.therapist_id = t.id;
 |8  |2023-08-01  |John             |Dr. Sarah           |100.00|
 |45 |2023-07-23  |Ava              |Dr. Sarah           |80.00 |
 |46 |2023-07-27  |Ava              |Dr. Sarah           |80.00 |
-|47 |2023-07-29  |Ava              |Dr. Sarah           |80.00 |
-|48 |2023-08-02  |Ava              |Dr. Sarah           |80.00 |
-|49 |2023-08-05  |Ava              |Dr. Sarah           |80.00 |
-|9  |2023-07-11  |Jane             |Dr. Michael         |75.00 |
-|10 |2023-07-14  |Jane             |Dr. Michael         |75.00 |
-|11 |2023-07-19  |Jane             |Dr. Michael         |75.00 |
-|12 |2023-07-22  |Jane             |Dr. Michael         |75.00 |
-|13 |2023-07-26  |Jane             |Dr. Michael         |75.00 |
-|50 |2023-07-28  |Liam             |Dr. Michael         |75.00 |
-|51 |2023-08-01  |Liam             |Dr. Michael         |75.00 |
-|52 |2023-08-04  |Liam             |Dr. Michael         |75.00 |
-|14 |2023-07-12  |Michael          |Dr. Jennifer        |80.00 |
-|15 |2023-07-15  |Michael          |Dr. Jennifer        |80.00 |
-|16 |2023-07-20  |Michael          |Dr. Jennifer        |80.00 |
-|17 |2023-07-23  |Michael          |Dr. Jennifer        |80.00 |
-|53 |2023-07-24  |Isabella         |Dr. Jennifer        |90.00 |
-|54 |2023-07-29  |Isabella         |Dr. Jennifer        |90.00 |
-|55 |2023-08-02  |Isabella         |Dr. Jennifer        |90.00 |
-|18 |2023-07-13  |Emily            |Dr. David           |90.00 |
-|19 |2023-07-16  |Emily            |Dr. David           |90.00 |
-|20 |2023-07-19  |Emily            |Dr. David           |90.00 |
-|21 |2023-07-24  |Emily            |Dr. David           |90.00 |
-|56 |2023-07-26  |Benjamin         |Dr. David           |95.00 |
-|57 |2023-07-30  |Benjamin         |Dr. David           |95.00 |
-|22 |2023-07-10  |Sophia           |Dr. Emily           |95.00 |
-|23 |2023-07-13  |Sophia           |Dr. Emily           |95.00 |
-|24 |2023-07-16  |Sophia           |Dr. Emily           |95.00 |
-|25 |2023-07-19  |Sophia           |Dr. Emily           |95.00 |
-|26 |2023-07-22  |Sophia           |Dr. Emily           |95.00 |
-|58 |2023-07-23  |Mia              |Dr. Emily           |80.00 |
-|59 |2023-07-26  |Mia              |Dr. Emily           |80.00 |
-|60 |2023-07-29  |Mia              |Dr. Emily           |80.00 |
-|27 |2023-07-11  |William          |Dr. William         |80.00 |
-|28 |2023-07-14  |William          |Dr. William         |80.00 |
-|29 |2023-07-17  |William          |Dr. William         |80.00 |
-|30 |2023-07-20  |William          |Dr. William         |80.00 |
-|31 |2023-07-23  |William          |Dr. William         |80.00 |
-|61 |2023-07-28  |Ethan            |Dr. William         |70.00 |
-|62 |2023-08-01  |Ethan            |Dr. William         |70.00 |
-|63 |2023-08-05  |Ethan            |Dr. William         |70.00 |
-|32 |2023-07-12  |Olivia           |Dr. Olivia          |90.00 |
-|33 |2023-07-15  |Olivia           |Dr. Olivia          |90.00 |
-|34 |2023-07-18  |Olivia           |Dr. Olivia          |90.00 |
-|35 |2023-07-21  |Olivia           |Dr. Olivia          |90.00 |
-|64 |2023-07-24  |Amelia           |Dr. Olivia          |85.00 |
-|65 |2023-07-27  |Amelia           |Dr. Olivia          |85.00 |
-|36 |2023-07-13  |James            |Dr. Ethan           |75.00 |
-|37 |2023-07-16  |James            |Dr. Ethan           |75.00 |
-|38 |2023-07-19  |James            |Dr. Ethan           |75.00 |
-|66 |2023-07-26  |Oliver           |Dr. Ethan           |90.00 |
-|67 |2023-07-30  |Oliver           |Dr. Ethan           |90.00 |
-|68 |2023-08-02  |Oliver           |Dr. Ethan           |90.00 |
-|39 |2023-07-10  |Sophie           |Dr. Amelia          |60.00 |
-|40 |2023-07-13  |Sophie           |Dr. Amelia          |60.00 |
-|41 |2023-07-16  |Sophie           |Dr. Amelia          |60.00 |
-|69 |2023-07-23  |Harper           |Dr. Amelia          |70.00 |
-|70 |2023-07-26  |Harper           |Dr. Amelia          |70.00 |
-|71 |2023-07-29  |Harper           |Dr. Amelia          |70.00 |
-|42 |2023-07-11  |Alexander        |Dr. James           |50.00 |
-|43 |2023-07-14  |Alexander        |Dr. James           |50.00 |
-|44 |2023-07-17  |Alexander        |Dr. James           |50.00 |
-|72 |2023-07-24  |Evelyn           |Dr. James           |60.00 |
-|73 |2023-07-27  |Evelyn           |Dr. James           |60.00 |
-|74 |2023-07-30  |Evelyn           |Dr. James           |60.00 |
 
 
 **Payment Overview**
