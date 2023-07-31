@@ -197,8 +197,9 @@ CREATE TABLE Languages (
 );
 ```
 The schema of the resulting database was then provided to the data scientists' team. 
-This schema serves as a visual representation of the SQL tables and the relationships between 
-them, aiding in understanding the database structure and data flow.
+[This schema serves as a visual representation of the SQL tables and the relationships between 
+them](https://drawsql.app/teams/pavel-polishchuk-team/diagrams/mindful-bird-sql-project), aiding in understanding the database structure and data flow.
+
 
 <figure>
   <img src="https://i.postimg.cc/GthQcGwc/SQL-Diagram.png" alt="SQL-Diagram" width="600">
