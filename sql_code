@@ -1,0 +1,748 @@
+-- PART 1: CREATING TABLES
+
+-- @block Clients Table
+CREATE TABLE Clients (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    bio TEXT
+);
+
+-- @block Therapists Table
+CREATE TABLE Therapists (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    bio TEXT,
+    registration_date DATE
+);
+
+-- @block Specializations Table
+CREATE TABLE Specializations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100)
+);
+
+-- @block Client Reviews Table
+CREATE TABLE ClientReviews (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT,
+    therapist_id INT,
+    rating FLOAT,
+    review_text TEXT,
+    date DATE,
+    FOREIGN KEY (client_id) REFERENCES Clients(id),
+    FOREIGN KEY (therapist_id) REFERENCES Therapists(id)
+);
+
+-- @block Availability Table
+CREATE TABLE Availability (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    therapist_id INT,
+    day_of_week VARCHAR(20),
+    start_time TIME,
+    end_time TIME,
+    FOREIGN KEY (therapist_id) REFERENCES Therapists(id)
+);
+
+-- @block Sessions Table
+CREATE TABLE Sessions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    client_id INT,
+    therapist_id INT,
+    date DATE,
+    if_happened BOOLEAN,
+    payment_status ENUM('pending', 'completed', 'cancelled'), 
+    FOREIGN KEY (client_id) REFERENCES Clients(id),
+    FOREIGN KEY (therapist_id) REFERENCES Therapists(id)
+);
+
+-- @block Session Notes Table
+CREATE TABLE SessionNotes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id INT,
+    notes_text TEXT,
+    therapist_private_notes TEXT,
+    FOREIGN KEY (session_id) REFERENCES Sessions(id)
+);
+
+-- @block Payment Transactions Table
+CREATE TABLE PaymentTransactions (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id INT, 
+    client_id INT,
+    therapist_id INT,
+    amount DECIMAL(10, 2),
+    date DATE,
+    FOREIGN KEY (session_id) REFERENCES Sessions(id), 
+    FOREIGN KEY (client_id) REFERENCES Clients(id),
+    FOREIGN KEY (therapist_id) REFERENCES Therapists(id)
+);
+
+
+-- @block Participants Table
+CREATE TABLE Participants (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    first_name VARCHAR(50),
+    last_name VARCHAR(50),
+    email VARCHAR(100),
+    bio TEXT,
+    type ENUM('client', 'therapist') 
+);
+
+-- @block Chat Messages Table
+CREATE TABLE ChatMessages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id INT,
+    sender_id INT,
+    receiver_id INT,
+    message_text TEXT,
+    timestamp DATETIME,
+    FOREIGN KEY (session_id) REFERENCES Sessions(id),
+    FOREIGN KEY (sender_id) REFERENCES Participants(id) ON DELETE CASCADE,
+    FOREIGN KEY (receiver_id) REFERENCES Participants(id) ON DELETE CASCADE
+);
+
+
+-- @block Therapist Credentials Table
+CREATE TABLE Credentials (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    therapist_id INT,
+    qualification VARCHAR(100),
+    issuing_institution VARCHAR(100),
+    completion_year INT,
+    FOREIGN KEY (therapist_id) REFERENCES Therapists(id)
+);
+
+-- @block Therapist Languages Table
+CREATE TABLE Languages (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    therapist_id INT,
+    language VARCHAR(50),
+    FOREIGN KEY (therapist_id) REFERENCES Therapists(id)
+);
+
+
+-- PART 2: SAMPLE DATA
+
+-- @block Clients Table
+INSERT INTO Clients (first_name, last_name, email, bio)
+VALUES
+    ('John', 'Doe', 'john.doe@example.com', 'Hi, I\'m John! I\'m interested in finding a therapist to help with managing stress and anxiety.'),
+    ('Jane', 'Smith', 'jane.smith@example.com', 'Hello, I\'m Jane! I\'m looking for a therapist who specializes in relationship counseling.'),
+    ('Michael', 'Brown', 'michael.brown@example.com', 'Hi, I\'m Michael! I want to find a therapist to help me cope with grief and loss.'),
+    ('Emily', 'Johnson', 'emily.johnson@example.com', 'Hello, I\'m Emily! I\'m seeking therapy to improve my self-esteem and confidence.'),
+    ('Sophia', 'Lee', 'sophia.lee@example.com', 'Hi, I\'m Sophia! I need support to overcome work-related stress and burnout.'),
+    ('William', 'Wong', 'william.wong@example.com', 'Hello, I\'m William! I want to work on improving my communication skills.'),
+    ('Olivia', 'Chen', 'olivia.chen@example.com', 'Hi, I\'m Olivia! I\'m interested in finding a therapist who can help with my sleep difficulties.'),
+    ('James', 'Kim', 'james.kim@example.com', 'Hello, I\'m James! I want to find a therapist to help me navigate life transitions.'),
+    ('Sophie', 'Nguyen', 'sophie.nguyen@example.com', 'Hi, I\'m Sophie! I\'m seeking therapy to manage my anxiety and panic attacks.'),
+    ('Alexander', 'Garcia', 'alexander.garcia@example.com', 'Hello, I\'m Alexander! I need help coping with the loss of a loved one.'),
+    ('Ava', 'Martinez', 'ava.martinez@example.com', 'Hi, I\'m Ava! I want to find a therapist to work on my interpersonal relationships.'),
+    ('Liam', 'Lopez', 'liam.lopez@example.com', 'Hello, I\'m Liam! I\'m interested in finding a therapist to help with my anger management.'),
+    ('Isabella', 'Torres', 'isabella.torres@example.com', 'Hi, I\'m Isabella! I want to find a therapist who can help with my self-confidence issues.'),
+    ('Benjamin', 'Rivera', 'benjamin.rivera@example.com', 'Hello, I\'m Benjamin! I\'m looking for a therapist to help me navigate my career choices.'),
+    ('Mia', 'Perez', 'mia.perez@example.com', 'Hi, I\'m Mia! I\'m seeking therapy to cope with my social anxiety and improve my social skills.'),
+    ('Ethan', 'Gomez', 'ethan.gomez@example.com', 'Hello, I\'m Ethan! I want to find a therapist to work on my stress and time management.'),
+    ('Amelia', 'Diaz', 'amelia.diaz@example.com', 'Hi, I\'m Amelia! I need help to overcome my fear of public speaking.'),
+    ('Oliver', 'Martin', 'oliver.martin@example.com', 'Hello, I\'m Oliver! I\'m interested in finding a therapist to help me cope with my depression.'),
+    ('Harper', 'Rodriguez', 'harper.rodriguez@example.com', 'Hi, I\'m Harper! I want to find a therapist to help me with my decision-making.'),
+    ('Evelyn', 'Wilson', 'evelyn.wilson@example.com', 'Hello, I\'m Evelyn! I\'m seeking therapy to improve my assertiveness and set boundaries.');
+
+-- @block Therapists Table
+INSERT INTO Therapists (first_name, last_name, email, bio, registration_date)
+VALUES
+    ('Dr. Sarah', 'Johnson', 'sarah.johnson@example.com', 'I\'m Dr. Sarah Johnson, a licensed psychologist with 10 years of experience in cognitive-behavioral therapy.', '2022-11-15'),
+    ('Dr. Michael', 'Smith', 'michael.smith@example.com', 'Hi, I\'m Dr. Michael Smith, a licensed counselor specializing in family therapy.', '2022-12-10'),
+    ('Dr. Jennifer', 'Brown', 'jennifer.brown@example.com', 'I\'m Dr. Jennifer Brown, a clinical psychologist with expertise in trauma counseling.', '2023-01-05'),
+    ('Dr. David', 'Thomas', 'david.thomas@example.com', 'Hello, I\'m Dr. David Thomas, a licensed therapist focusing on anxiety and stress management.', '2023-02-20'),
+    ('Dr. Emily', 'Garcia', 'emily.garcia@example.com', 'I\'m Dr. Emily Garcia, a licensed psychologist specialized in LGBTQ+ mental health.', '2023-03-01'),
+    ('Dr. William', 'Martinez', 'william.martinez@example.com', 'Hi, I\'m Dr. William Martinez, a counselor experienced in mindfulness-based therapy.', '2023-04-02'),
+    ('Dr. Olivia', 'Lopez', 'olivia.lopez@example.com', 'I\'m Dr. Olivia Lopez, a clinical psychologist with a focus on depression and mood disorders.', '2023-04-15'),
+    ('Dr. Ethan', 'Rodriguez', 'ethan.rodriguez@example.com', 'Hello, I\'m Dr. Ethan Rodriguez, a licensed therapist specializing in couples counseling.', '2023-05-05'),
+    ('Dr. Amelia', 'Wilson', 'amelia.wilson@example.com', 'I\'m Dr. Amelia Wilson, a psychologist with expertise in cognitive therapy and behavioral analysis.', '2023-05-20'),
+    ('Dr. James', 'Gomez', 'james.gomez@example.com', 'Hi, I\'m Dr. James Gomez, a licensed counselor providing support for grief and loss.', '2023-06-10');
+
+-- @block Specializations Table
+INSERT INTO Specializations (name)
+VALUES
+    ('Stress Management'),
+    ('Anxiety'),
+    ('Relationship Counseling'),
+    ('Depression'),
+    ('Grief and Loss'),
+    ('Mindfulness-Based Therapy'),
+    ('Self-Esteem and Confidence'),
+    ('Couples Counseling');
+
+-- @block Client Reviews Data
+INSERT INTO ClientReviews (client_id, therapist_id, rating, review_text, date)
+VALUES
+    (1, 1, 4.8, 'Dr. Sarah is an excellent therapist. She helped me manage my stress effectively.', '2023-07-10'),
+    (2, 2, 4.5, 'Dr. Michael is very understanding and supportive. His advice on improving communication in relationships has been valuable.', '2023-07-12'),
+    (3, 3, 4.9, 'I\'m grateful to Dr. Jennifer for helping me cope with the loss of a loved one. Her compassionate approach made a difference.', '2023-07-14'),
+    (4, 4, 4.6, 'Dr. David has been a great support in my journey to improve self-esteem. I\'m seeing positive changes.', '2023-07-16'),
+    (5, 5, 4.7, 'I highly recommend Dr. Emily to the LGBTQ+ community. Her understanding and guidance have been invaluable to me.', '2023-07-18'),
+    (6, 6, 4.4, 'Dr. William\'s mindfulness-based therapy has helped me gain clarity and focus in my life.', '2023-07-20'),
+    (7, 7, 4.3, 'Dr. Olivia is a caring psychologist. Her sessions have been helpful in managing my depression.', '2023-07-22'),
+    (8, 8, 4.7, 'Dr. Ethan is an experienced couples counselor. My partner and I have seen improvements in our relationship.', '2023-07-24'),
+    (9, 9, 4.9, 'I\'m glad I found Dr. Amelia. Her cognitive therapy approach has been beneficial in addressing my challenges.', '2023-07-26'),
+    (10, 10, 4.5, 'Dr. James has been compassionate during my journey through grief. His support has been invaluable.', '2023-07-28');
+
+-- @block Availability Data
+INSERT INTO Availability (therapist_id, day_of_week, start_time, end_time)
+VALUES
+    (1, 'Monday', '09:00:00', '16:00:00'),
+    (1, 'Tuesday', '10:00:00', '17:00:00'),
+    (1, 'Wednesday', '09:30:00', '14:30:00'),
+    (2, 'Tuesday', '13:00:00', '20:00:00'),
+    (2, 'Wednesday', '11:00:00', '18:00:00'),
+    (2, 'Thursday', '09:00:00', '16:00:00'),
+    (3, 'Monday', '10:00:00', '18:00:00'),
+    (3, 'Tuesday', '10:00:00', '16:00:00'),
+    (3, 'Wednesday', '11:30:00', '17:30:00'),
+    (4, 'Tuesday', '09:00:00', '15:00:00'),
+    (4, 'Thursday', '12:00:00', '19:00:00'),
+    (4, 'Friday', '09:00:00', '14:00:00'),
+    (5, 'Monday', '12:00:00', '18:00:00'),
+    (5, 'Wednesday', '10:00:00', '16:00:00'),
+    (5, 'Thursday', '11:00:00', '17:00:00'),
+    (6, 'Tuesday', '14:00:00', '20:00:00'),
+    (6, 'Wednesday', '13:00:00', '19:00:00'),
+    (6, 'Friday', '10:00:00', '15:00:00'),
+    (7, 'Wednesday', '09:00:00', '17:00:00'),
+    (7, 'Thursday', '10:00:00', '16:00:00'),
+    (7, 'Friday', '11:00:00', '18:00:00'),
+    (8, 'Monday', '13:00:00', '19:00:00'),
+    (8, 'Wednesday', '11:00:00', '17:00:00'),
+    (8, 'Thursday', '09:00:00', '16:00:00'),
+    (9, 'Tuesday', '12:00:00', '18:00:00'),
+    (9, 'Thursday', '10:30:00', '17:30:00'),
+    (9, 'Friday', '09:30:00', '14:30:00'),
+    (10, 'Monday', '10:00:00', '17:00:00'),
+    (10, 'Wednesday', '09:00:00', '16:00:00'),
+    (10, 'Friday', '12:00:00', '18:00:00');
+
+-- @block Sessions Data
+INSERT INTO Sessions (client_id, therapist_id, date, if_happened, payment_status)
+VALUES
+    (1, 1, '2023-07-10', 1, 'completed'),
+    (1, 1, '2023-07-13', 1, 'completed'),
+    (1, 1, '2023-07-18', 1, 'completed'),
+    (1, 1, '2023-07-21', 1, 'completed'),
+    (1, 1, '2023-07-25', 1, 'completed'),
+    (1, 1, '2023-07-27', 1, 'completed'),
+    (1, 1, '2023-07-30', 1, 'completed'),
+    (1, 1, '2023-08-01', 1, 'completed'),
+    (2, 2, '2023-07-11', 1, 'completed'),
+    (2, 2, '2023-07-14', 1, 'completed'),
+    (2, 2, '2023-07-19', 1, 'completed'),
+    (2, 2, '2023-07-22', 1, 'completed'),
+    (2, 2, '2023-07-26', 1, 'completed'),
+    (3, 3, '2023-07-12', 1, 'completed'),
+    (3, 3, '2023-07-15', 1, 'completed'),
+    (3, 3, '2023-07-20', 1, 'completed'),
+    (3, 3, '2023-07-23', 1, 'completed'),
+    (4, 4, '2023-07-13', 1, 'completed'),
+    (4, 4, '2023-07-16', 1, 'completed'),
+    (4, 4, '2023-07-19', 1, 'completed'),
+    (4, 4, '2023-07-24', 1, 'completed'),
+    (5, 5, '2023-07-10', 1, 'completed'),
+    (5, 5, '2023-07-13', 1, 'completed'),
+    (5, 5, '2023-07-16', 1, 'completed'),
+    (5, 5, '2023-07-19', 1, 'completed'),
+    (5, 5, '2023-07-22', 1, 'completed'),
+    (6, 6, '2023-07-11', 1, 'completed'),
+    (6, 6, '2023-07-14', 1, 'completed'),
+    (6, 6, '2023-07-17', 1, 'completed'),
+    (6, 6, '2023-07-20', 1, 'completed'),
+    (6, 6, '2023-07-23', 1, 'completed'),
+    (7, 7, '2023-07-12', 1, 'completed'),
+    (7, 7, '2023-07-15', 1, 'completed'),
+    (7, 7, '2023-07-18', 1, 'completed'),
+    (7, 7, '2023-07-21', 1, 'completed'),
+    (8, 8, '2023-07-13', 1, 'completed'),
+    (8, 8, '2023-07-16', 1, 'completed'),
+    (8, 8, '2023-07-19', 1, 'completed'),
+    (9, 9, '2023-07-10', 1, 'completed'),
+    (9, 9, '2023-07-13', 1, 'completed'),
+    (9, 9, '2023-07-16', 1, 'completed'),
+    (10, 10, '2023-07-11', 1, 'completed'),
+    (10, 10, '2023-07-14', 1, 'completed'),
+    (10, 10, '2023-07-17', 1, 'completed'),
+    (11, 1, '2023-07-23', 1, 'completed'),
+    (11, 1, '2023-07-27', 1, 'completed'),
+    (11, 1, '2023-07-29', 1, 'completed'),
+    (11, 1, '2023-08-02', 1, 'completed'),
+    (11, 1, '2023-08-05', 1, 'completed'),
+    (12, 2, '2023-07-28', 1, 'completed'),
+    (12, 2, '2023-08-01', 1, 'completed'),
+    (12, 2, '2023-08-04', 1, 'completed'),
+    (13, 3, '2023-07-24', 1, 'completed'),
+    (13, 3, '2023-07-29', 1, 'completed'),
+    (13, 3, '2023-08-02', 1, 'completed'),
+    (14, 4, '2023-07-26', 1, 'completed'),
+    (14, 4, '2023-07-30', 1, 'completed'),
+    (15, 5, '2023-07-23', 1, 'completed'),
+    (15, 5, '2023-07-26', 1, 'completed'),
+    (15, 5, '2023-07-29', 1, 'completed'),
+    (16, 6, '2023-07-28', 1, 'completed'),
+    (16, 6, '2023-08-01', 1, 'completed'),
+    (16, 6, '2023-08-05', 1, 'completed'),
+    (17, 7, '2023-07-24', 1, 'completed'),
+    (17, 7, '2023-07-27', 1, 'completed'),
+    (18, 8, '2023-07-26', 1, 'completed'),
+    (18, 8, '2023-07-30', 1, 'completed'),
+    (18, 8, '2023-08-02', 1, 'completed'),
+    (19, 9, '2023-07-23', 1, 'completed'),
+    (19, 9, '2023-07-26', 1, 'completed'),
+    (19, 9, '2023-07-29', 1, 'completed'),
+    (20, 10, '2023-07-24', 1, 'completed'),
+    (20, 10, '2023-07-27', 1, 'completed'),
+    (20, 10, '2023-07-30', 1, 'completed');
+
+-- @block Session Notes Data
+INSERT INTO SessionNotes (session_id, notes_text, therapist_private_notes)
+VALUES
+    (1, 'John had a productive session today. We discussed strategies for coping with stress and anxiety.', 'The client seemed engaged and committed to the treatment plan.'),
+    (2, 'John made progress in recognizing thought patterns. We explored deeper into the roots of his anxiety.', 'The client expressed relief after identifying some underlying causes of anxiety.'),
+    (3, 'John showed improvement in implementing relaxation techniques. We discussed setting achievable goals.', 'The client is motivated to continue practicing relaxation techniques and goal setting.'),
+    (4, 'John discussed recent experiences with stressors and applied coping strategies effectively.', 'The client demonstrated resilience in handling stressors and utilizing coping techniques.'),
+    (5, 'John shared his experiences with Dr. Sarah Johnson and how therapy has been helpful for him.', 'The client expressed gratitude for the progress made in therapy.'),
+    (6, 'John discussed setting new personal goals and strategies to maintain progress outside of therapy.', 'The client showed enthusiasm in applying therapy insights to daily life.'),
+    (7, 'John worked on managing interpersonal conflicts and exploring assertiveness skills.', 'The client is interested in practicing assertiveness in various situations.'),
+    (8, 'John discussed his journey through therapy and expressed confidence in his coping abilities.', 'The client demonstrated growth and positive self-reflection throughout the therapy process.'),
+    (9, 'Jane expressed concerns about her communication with her partner. We explored ways to improve their relationship.', 'The client showed vulnerability in discussing past traumas.'),
+    (10, 'Jane made progress in communicating her needs. We discussed positive aspects of her relationship.', 'The client expressed feeling more connected to her partner after implementing new communication strategies.'),
+    (11, 'Jane discussed challenges in implementing new communication strategies. We role-played different scenarios.', 'The client is willing to continue practicing communication techniques and exploring more scenarios.'),
+    (12, 'Jane expressed feeling more satisfied with her relationship. We discussed ways to maintain positive changes.', 'The client demonstrated commitment to maintaining the progress in her relationship.'),
+    (13, 'Jane shared her experiences with Dr. Michael Smith and how therapy has impacted her life.', 'The client expressed appreciation for the therapeutic support received.'),
+    (14, 'Michael shared memories of his late parent, and we discussed his grief journey.', 'The client is making progress in acknowledging emotions.'),
+    (15, 'Michael discussed memories of significant events with the late parent. We explored the emotional impact.', 'The client expressed relief after sharing emotional memories and felt understood.'),
+    (16, 'Michael expressed mixed emotions regarding the memories shared. We processed the feelings.', 'The client demonstrated emotional awareness and openness during the session.'),
+    (17, 'Michael reflected on the grief journey and discussed ways to honor the late parent''s memory.', 'The client is open to exploring creative ways of honoring the late parent.'),
+    (18, 'Emily shared her recent experiences with social anxiety and discussed the challenges she faced.', 'The client showed bravery in sharing vulnerable experiences.'),
+    (19, 'Emily worked on identifying negative thought patterns and explored reframing techniques.', 'The client is interested in learning more about cognitive reframing and its potential benefits.'),
+    (20, 'Emily discussed her progress in applying cognitive reframing techniques in real-life situations.', 'The client demonstrated a willingness to challenge negative thought patterns.'),
+    (21, 'Emily explored her social interactions and applied assertiveness techniques.', 'The client expressed a desire to continue practicing assertiveness in social settings.'),
+    (22, 'Sophia discussed her experiences with anxiety at school. We explored coping strategies.', 'The client is interested in learning more about grounding exercises.'),
+    (23, 'Sophia made progress in implementing grounding exercises. We discussed managing test anxiety.', 'The client felt more centered and focused after using grounding exercises during exams.'),
+    (24, 'Sophia shared her feelings of overwhelm during the session. We practiced mindfulness techniques.', 'The client expressed experiencing relief from overwhelming emotions through mindfulness.'),
+    (25, 'Sophia discussed her extracurricular activities and explored strategies for achieving balance.', 'The client is motivated to create a balanced routine for academics and activities.'),
+    (26, 'Sophia reflected on her overall well-being and discussed ways to nurture self-compassion.', 'The client expressed the importance of self-compassion and is committed to cultivating it.'),
+    (27, 'William discussed his experiences with attention difficulties and explored concentration techniques.', 'The client expressed relief after identifying concentration techniques that work for him.'),
+    (28, 'William made progress in managing distractions and discussed time management strategies.', 'The client is interested in exploring time-blocking techniques for better productivity.'),
+    (29, 'William shared his academic challenges and explored ways to advocate for support.', 'The client demonstrated determination in seeking academic support and accommodations.'),
+    (30, 'William discussed his personal interests and explored potential career paths.', 'The client is motivated to explore career options aligned with his passions.'),
+    (31, 'William reflected on his therapeutic journey and expressed gratitude for the support received.', 'The client showed growth in self-awareness and appreciation for the therapeutic process.'),
+    (32, 'Olivia discussed her experiences with stress management and explored relaxation techniques.', 'The client expressed interest in trying mindfulness-based stress reduction.'),
+    (33, 'Olivia made progress in applying mindfulness techniques in daily life. We discussed self-care.', 'The client reported feeling more centered and less overwhelmed after practicing mindfulness.'),
+    (34, 'Olivia shared her feelings of burnout and discussed ways to set healthy boundaries.', 'The client demonstrated insight into the importance of setting boundaries for well-being.'),
+    (35, 'Olivia discussed her hobbies and explored ways to incorporate them into her routine.', 'The client is motivated to prioritize leisure activities and hobbies.'),
+    (36, 'James discussed his experiences with self-esteem and explored cognitive-behavioral strategies.', 'The client is open to challenging negative self-talk through cognitive restructuring.'),
+    (37, 'James made progress in reframing negative self-beliefs and discussed assertiveness skills.', 'The client expressed feeling more empowered after practicing assertiveness in relationships.'),
+    (38, 'James shared his reflections on personal growth and discussed ways to maintain progress.', 'The client showed determination in applying therapy insights to maintain positive changes.'),
+    (39, 'Sophie discussed her experiences with anxiety in social settings and explored exposure techniques.', 'The client demonstrated courage in facing social anxiety through exposure therapy.'),
+    (40, 'Sophie made progress in applying exposure techniques and discussed resilience.', 'The client expressed feeling more confident in navigating social situations after exposure therapy.'),
+    (41, 'Sophie shared her interests and hobbies outside of therapy and explored self-expression.', 'The client is motivated to explore creative outlets for self-expression.'),
+    (42, 'Alexander discussed his experiences with academic stress and explored time management.', 'The client is open to exploring time-management strategies for better academic performance.'),
+    (43, 'Alexander made progress in implementing time management techniques. We discussed self-motivation.', 'The client expressed feeling more organized and self-motivated after using time management techniques.'),
+    (44, 'Alexander shared his extracurricular activities and explored ways to balance academics and interests.', 'The client is motivated to create a balanced schedule to pursue both academics and interests.'),
+    (45, 'Ava discussed her experiences with stress and explored coping strategies.', 'The client expressed an interest in mindfulness practices for stress reduction.'),
+    (46, 'Ava made progress in implementing mindfulness techniques and discussed emotional regulation.', 'The client felt more equipped to manage overwhelming emotions through mindfulness.'),
+    (47, 'Ava shared her experiences with time management and explored techniques for prioritization.', 'The client is motivated to explore techniques for better time management.'),
+    (48, 'Ava discussed her future goals and explored potential career paths.', 'The client is enthusiastic about exploring career options aligned with her interests.'),
+    (49, 'Ava reflected on her therapeutic journey and expressed gratitude for the support received.', 'The client showed growth in self-awareness and appreciation for the therapeutic process.'),
+    (50, 'Liam discussed his experiences with social anxiety and explored exposure techniques.', 'The client demonstrated courage in facing social anxiety through exposure therapy.'),
+    (51, 'Liam made progress in applying exposure techniques and discussed self-confidence.', 'The client expressed feeling more confident in social situations after exposure therapy.'),
+    (52, 'Liam shared his interests and hobbies outside of therapy and explored self-expression.', 'The client is motivated to explore creative outlets for self-expression.'),
+    (53, 'Isabella discussed her academic challenges and explored self-motivation techniques.', 'The client expressed interest in techniques for maintaining motivation in academics.'),
+    (54, 'Isabella made progress in implementing self-motivation techniques and discussed test anxiety.', 'The client reported feeling more focused and motivated while studying.'),
+    (55, 'Isabella shared her extracurricular activities and explored ways to manage time effectively.', 'The client is motivated to create a balanced schedule for academics and interests.'),
+    (56, 'Benjamin discussed his experiences with social interactions and explored communication skills.', 'The client is open to learning assertive communication techniques for healthier relationships.'),
+    (57, 'Benjamin made progress in applying assertiveness techniques and discussed self-esteem.', 'The client expressed feeling more empowered after practicing assertiveness in social situations.'),
+    (58, 'Mia discussed her experiences with stress and explored relaxation techniques.', 'The client expressed interest in trying mindfulness-based stress reduction.'),
+    (59, 'Mia made progress in applying mindfulness techniques and discussed emotional well-being.', 'The client reported feeling more centered and less overwhelmed after practicing mindfulness.'),
+    (60, 'Mia shared her experiences with time management and explored techniques for better productivity.', 'The client is motivated to explore time-blocking strategies for increased productivity.'),
+    (61, 'Ethan discussed his academic challenges and explored strategies for improved focus.', 'The client expressed interest in learning more about concentration techniques.'),
+    (62, 'Ethan made progress in implementing concentration techniques and discussed test anxiety.', 'The client reported feeling more focused and prepared during exams.'),
+    (63, 'Ethan shared his extracurricular interests and explored ways to maintain work-life balance.', 'The client is motivated to create a balanced routine for academics and activities.'),
+    (64, 'Amelia discussed her experiences with social anxiety and explored cognitive reframing.', 'The client responded well to cognitive reframing techniques for challenging negative thoughts.'),
+    (65, 'Amelia made progress in applying cognitive reframing and discussed assertiveness training.', 'The client expressed feeling more confident in social interactions after assertiveness training.'),
+    (66, 'Oliver discussed his experiences with academic stress and explored time management.', 'The client is motivated to create a study schedule for better time management.'),
+    (67, 'Oliver made progress in implementing time management techniques and discussed test preparation.', 'The client reported feeling more organized and prepared for upcoming exams.'),
+    (68, 'Oliver shared his interests in sports and explored strategies for managing sports commitments and academics.', 'The client is motivated to find a balance between sports and academics.'),
+    (69, 'Harper discussed her experiences with peer relationships and explored conflict resolution.', 'The client is open to learning communication strategies for resolving conflicts.'),
+    (70, 'Harper made progress in applying conflict resolution techniques and discussed self-esteem.', 'The client reported feeling more confident in navigating peer relationships.'),
+    (71, 'Harper shared her interests in art and explored art-based activities for emotional expression.', 'The client is motivated to use art as a form of emotional release.'),
+    (72, 'Evelyn discussed her experiences with managing academic and personal responsibilities.', 'The client expressed interest in time management techniques for juggling multiple tasks.'),
+    (73, 'Evelyn made progress in implementing time management strategies and discussed stress management.', 'The client reported feeling more in control of her schedule and better equipped to handle stress.'),
+    (74, 'Evelyn shared her future career aspirations and explored potential pathways.', 'The client is enthusiastic about exploring career options that align with her passions.');
+
+-- @block Payment Transactions Table (Continued)
+INSERT INTO PaymentTransactions (session_id, client_id, therapist_id, amount, date)
+VALUES
+    -- Client John's Payment Transactions
+    (1, 1, 1, 100.00, '2023-07-10'),
+    (2, 1, 1, 100.00, '2023-07-13'),
+    (3, 1, 1, 100.00, '2023-07-18'),
+    (4, 1, 1, 100.00, '2023-07-21'),
+    (5, 1, 1, 100.00, '2023-07-25'),
+    (6, 1, 1, 100.00, '2023-07-27'),
+    (7, 1, 1, 100.00, '2023-07-30'),
+    (8, 1, 1, 100.00, '2023-08-01'),
+    -- Client Jane's Payment Transactions
+    (9, 2, 2, 75.00, '2023-07-11'),
+    (10, 2, 2, 75.00, '2023-07-14'),
+    (11, 2, 2, 75.00, '2023-07-19'),
+    (12, 2, 2, 75.00, '2023-07-22'),
+    (13, 2, 2, 75.00, '2023-07-26'),
+    -- Client Michael's Payment Transactions
+    (14, 3, 3, 80.00, '2023-07-12'),
+    (15, 3, 3, 80.00, '2023-07-15'),
+    (16, 3, 3, 80.00, '2023-07-20'),
+    (17, 3, 3, 80.00, '2023-07-23'),
+    -- Client Emily's Payment Transactions
+    (18, 4, 4, 90.00, '2023-07-13'),
+    (19, 4, 4, 90.00, '2023-07-16'),
+    (20, 4, 4, 90.00, '2023-07-19'),
+    (21, 4, 4, 90.00, '2023-07-24'),
+    -- Client Sophia's Payment Transactions
+    (22, 5, 5, 95.00, '2023-07-10'),
+    (23, 5, 5, 95.00, '2023-07-13'),
+    (24, 5, 5, 95.00, '2023-07-16'),
+    (25, 5, 5, 95.00, '2023-07-19'),
+    (26, 5, 5, 95.00, '2023-07-22'),
+    -- Client William's Payment Transactions
+    (27, 6, 6, 80.00, '2023-07-11'),
+    (28, 6, 6, 80.00, '2023-07-14'),
+    (29, 6, 6, 80.00, '2023-07-17'),
+    (30, 6, 6, 80.00, '2023-07-20'),
+    (31, 6, 6, 80.00, '2023-07-23'),
+    -- Client Olivia's Payment Transactions
+    (32, 7, 7, 90.00, '2023-07-12'),
+    (33, 7, 7, 90.00, '2023-07-15'),
+    (34, 7, 7, 90.00, '2023-07-18'),
+    (35, 7, 7, 90.00, '2023-07-21'),
+    -- Client James's Payment Transactions
+    (36, 8, 8, 75.00, '2023-07-13'),
+    (37, 8, 8, 75.00, '2023-07-16'),
+    (38, 8, 8, 75.00, '2023-07-19'),
+    -- Client Sophie's Payment Transactions
+    (39, 9, 9, 60.00, '2023-07-10'),
+    (40, 9, 9, 60.00, '2023-07-13'),
+    (41, 9, 9, 60.00, '2023-07-16'),
+    -- Client Alexander's Payment Transactions
+    (42, 10, 10, 50.00, '2023-07-11'),
+    (43, 10, 10, 50.00, '2023-07-14'),
+    (44, 10, 10, 50.00, '2023-07-17'),
+    -- Client Ava's Payment Transactions
+    (45, 11, 1, 80.00, '2023-07-23'),
+    (46, 11, 1, 80.00, '2023-07-27'),
+    (47, 11, 1, 80.00, '2023-07-29'),
+    (48, 11, 1, 80.00, '2023-08-02'),
+    (49, 11, 1, 80.00, '2023-08-05'),
+    -- Client Liam's Payment Transactions
+    (50, 12, 2, 75.00, '2023-07-28'),
+    (51, 12, 2, 75.00, '2023-08-01'),
+    (52, 12, 2, 75.00, '2023-08-04'),
+    -- Client Isabella's Payment Transactions
+    (53, 13, 3, 90.00, '2023-07-24'),
+    (54, 13, 3, 90.00, '2023-07-29'),
+    (55, 13, 3, 90.00, '2023-08-02'),
+    -- Client Benjamin's Payment Transactions
+    (56, 14, 4, 95.00, '2023-07-26'),
+    (57, 14, 4, 95.00, '2023-07-30'),
+    -- Client Mia's Payment Transactions
+    (58, 15, 5, 80.00, '2023-07-23'),
+    (59, 15, 5, 80.00, '2023-07-26'),
+    (60, 15, 5, 80.00, '2023-07-29'),
+    -- Client Ethan's Payment Transactions
+    (61, 16, 6, 70.00, '2023-07-28'),
+    (62, 16, 6, 70.00, '2023-08-01'),
+    (63, 16, 6, 70.00, '2023-08-05'),
+    -- Client Amelia's Payment Transactions
+    (64, 17, 7, 85.00, '2023-07-24'),
+    (65, 17, 7, 85.00, '2023-07-27'),
+    -- Client Oliver's Payment Transactions
+    (66, 18, 8, 90.00, '2023-07-26'),
+    (67, 18, 8, 90.00, '2023-07-30'),
+    (68, 18, 8, 90.00, '2023-08-02'),
+    -- Client Harper's Payment Transactions
+    (69, 19, 9, 70.00, '2023-07-23'),
+    (70, 19, 9, 70.00, '2023-07-26'),
+    (71, 19, 9, 70.00, '2023-07-29'),
+    -- Client Evelyn's Payment Transactions
+    (72, 20, 10, 60.00, '2023-07-24'),
+    (73, 20, 10, 60.00, '2023-07-27'),
+    (74, 20, 10, 60.00, '2023-07-30');
+
+-- @block Participants Table (Many-to-Many Table For Chat Messages)
+INSERT INTO Participants (first_name, last_name, email, bio, type)
+VALUES
+    ('John', 'Doe', 'john.doe@example.com', 'Hi, I\'m John! I\'m interested in finding a therapist to help with managing stress and anxiety.', 'client'),
+    ('Jane', 'Smith', 'jane.smith@example.com', 'Hello, I\'m Jane! I\'m looking for a therapist who specializes in relationship counseling.', 'client'),
+    ('Michael', 'Brown', 'michael.brown@example.com', 'Hi, I\'m Michael! I want to find a therapist to help me cope with grief and loss.', 'client'),
+    ('Emily', 'Johnson', 'emily.johnson@example.com', 'Hello, I\'m Emily! I\'m seeking therapy to improve my self-esteem and confidence.', 'client'),
+    ('Sophia', 'Lee', 'sophia.lee@example.com', 'Hi, I\'m Sophia! I need support to overcome work-related stress and burnout.', 'client'),
+    ('William', 'Wong', 'william.wong@example.com', 'Hello, I\'m William! I want to work on improving my communication skills.', 'client'),
+    ('Olivia', 'Chen', 'olivia.chen@example.com', 'Hi, I\'m Olivia! I\'m interested in finding a therapist who can help with my sleep difficulties.', 'client'),
+    ('James', 'Kim', 'james.kim@example.com', 'Hello, I\'m James! I want to find a therapist to help me navigate life transitions.', 'client'),
+    ('Sophie', 'Nguyen', 'sophie.nguyen@example.com', 'Hi, I\'m Sophie! I\'m seeking therapy to manage my anxiety and panic attacks.', 'client'),
+    ('Alexander', 'Garcia', 'alexander.garcia@example.com', 'Hello, I\'m Alexander! I need help coping with the loss of a loved one.', 'client'),
+    ('Ava', 'Martinez', 'ava.martinez@example.com', 'Hi, I\'m Ava! I want to find a therapist to work on my interpersonal relationships.', 'client'),
+    ('Liam', 'Lopez', 'liam.lopez@example.com', 'Hello, I\'m Liam! I\'m interested in finding a therapist to help with my anger management.', 'client'),
+    ('Isabella', 'Torres', 'isabella.torres@example.com', 'Hi, I\'m Isabella! I want to find a therapist who can help with my self-confidence issues.', 'client'),
+    ('Benjamin', 'Rivera', 'benjamin.rivera@example.com', 'Hello, I\'m Benjamin! I\'m looking for a therapist to help me navigate my career choices.', 'client'),
+    ('Mia', 'Perez', 'mia.perez@example.com', 'Hi, I\'m Mia! I\'m seeking therapy to cope with my social anxiety and improve my social skills.', 'client'),
+    ('Ethan', 'Gomez', 'ethan.gomez@example.com', 'Hello, I\'m Ethan! I want to find a therapist to work on my stress and time management.', 'client'),
+    ('Amelia', 'Diaz', 'amelia.diaz@example.com', 'Hi, I\'m Amelia! I need help to overcome my fear of public speaking.', 'client'),
+    ('Oliver', 'Martin', 'oliver.martin@example.com', 'Hello, I\'m Oliver! I\'m interested in finding a therapist to help me cope with my depression.', 'client'),
+    ('Harper', 'Rodriguez', 'harper.rodriguez@example.com', 'Hi, I\'m Harper! I want to find a therapist to help me with my decision-making.', 'client'),
+    ('Evelyn', 'Wilson', 'evelyn.wilson@example.com', 'Hello, I\'m Evelyn! I\'m seeking therapy to improve my assertiveness and set boundaries.', 'client'),
+    ('Dr. Sarah', 'Johnson', 'sarah.johnson@example.com', 'I\'m Dr. Sarah Johnson, a licensed psychologist with 10 years of experience in cognitive-behavioral therapy.', 'therapist'),
+    ('Dr. Michael', 'Smith', 'michael.smith@example.com', 'Hi, I\'m Dr. Michael Smith, a licensed counselor specializing in family therapy.', 'therapist'),
+    ('Dr. Jennifer', 'Brown', 'jennifer.brown@example.com', 'I\'m Dr. Jennifer Brown, a clinical psychologist with expertise in trauma counseling.', 'therapist'),
+    ('Dr. David', 'Thomas', 'david.thomas@example.com', 'Hello, I\'m Dr. David Thomas, a licensed therapist focusing on anxiety and stress management.', 'therapist'),
+    ('Dr. Emily', 'Garcia', 'emily.garcia@example.com', 'I\'m Dr. Emily Garcia, a licensed psychologist specialized in LGBTQ+ mental health.', 'therapist'),
+    ('Dr. William', 'Martinez', 'william.martinez@example.com', 'Hi, I\'m Dr. William Martinez, a counselor experienced in mindfulness-based therapy.', 'therapist'),
+    ('Dr. Olivia', 'Lopez', 'olivia.lopez@example.com', 'I\'m Dr. Olivia Lopez, a clinical psychologist with a focus on depression and mood disorders.', 'therapist'),
+    ('Dr. Ethan', 'Rodriguez', 'ethan.rodriguez@example.com', 'Hello, I\'m Dr. Ethan Rodriguez, a licensed therapist specializing in couples counseling.', 'therapist'),
+    ('Dr. Amelia', 'Wilson', 'amelia.wilson@example.com', 'I\'m Dr. Amelia Wilson, a psychologist with expertise in cognitive therapy and behavioral analysis.', 'therapist'),
+    ('Dr. James', 'Gomez', 'james.gomez@example.com', 'Hi, I\'m Dr. James Gomez, a licensed counselor providing support for grief and loss.', 'therapist');
+
+-- @block ChatMessages Table
+INSERT INTO ChatMessages (session_id, sender_id, receiver_id, message_text, timestamp)
+VALUES
+    -- Session 1 (between client John Doe and therapist Dr. Sarah Johnson)
+    (1, 1, 21, 'Hello, Dr. Johnson. I hope you are doing well.', '2023-07-30 09:15:00'),
+    (1, 21, 1, 'Hi John, I''m doing well. How can I assist you today?', '2023-07-30 09:18:00'),
+    (1, 1, 21, 'I''ve been feeling stressed lately, and it''s affecting my work.', '2023-07-30 09:22:00'),
+    (1, 21, 1, 'I''m sorry to hear that. Let''s talk about what''s been causing your stress.', '2023-07-30 09:25:00'),
+    (1, 1, 21, 'Sure, I''d appreciate that.', '2023-07-30 09:28:00'),
+
+    -- Session 2 (between client Jane Smith and therapist Dr. Michael Smith)
+    (2, 2, 22, 'Hi Dr. Smith, I hope you had a good weekend.', '2023-07-30 10:30:00'),
+    (2, 22, 2, 'Hello Jane, yes, it was relaxing. How can I support you today?', '2023-07-30 10:32:00'),
+    (2, 2, 22, 'I''ve been having some communication issues with my partner.', '2023-07-30 10:35:00'),
+    (2, 22, 2, 'Communication challenges are common in relationships. Let''s explore this further.', '2023-07-30 10:40:00'),
+
+    -- Session 3 (between client Michael Brown and therapist Dr. Jennifer Brown)
+    (3, 3, 23, 'Hi Dr. Brown, I wanted to talk about the loss of my pet.', '2023-07-30 11:45:00'),
+    (3, 23, 3, 'Hello Michael, I''m here to listen. Losing a pet can be very difficult.', '2023-07-30 11:50:00'),
+    (3, 3, 23, 'It''s been challenging to cope with the grief.', '2023-07-30 11:55:00'),
+    (3, 23, 3, 'It''s okay to feel that way. We can work through this together.', '2023-07-30 12:00:00'),
+
+    -- Session 4 (between client Sophia Lee and therapist Dr. David Thomas)
+    (4, 5, 24, 'Hi Dr. Thomas, I''ve been feeling overwhelmed at work.', '2023-07-30 13:15:00'),
+    (4, 24, 5, 'Hello Sophia, work-related stress can be challenging. Let''s discuss what''s been going on.', '2023-07-30 13:20:00'),
+
+    -- Session 5 (between client William Wong and therapist Dr. Emily Garcia)
+    (5, 6, 25, 'Hi Dr. Garcia, I want to work on my communication skills.', '2023-07-30 14:30:00'),
+    (5, 25, 6, 'Hello William, improving communication is a great goal. Let''s start with some strategies.', '2023-07-30 14:35:00'),
+
+    -- Session 6 (between client Olivia Chen and therapist Dr. William Martinez)
+    (6, 7, 26, 'Hi Dr. Martinez, my sleep difficulties have been affecting my daily life.', '2023-07-30 15:45:00'),
+    (6, 26, 7, 'Hello Olivia, sleep problems can be distressing. Let''s explore potential solutions.', '2023-07-30 15:50:00'),
+    (6, 7, 26, 'I''ve tried different techniques, but nothing seems to work.', '2023-07-30 15:55:00'),
+    (6, 26, 7, 'Don''t worry; we''ll find a suitable approach together.', '2023-07-30 16:00:00'),
+
+    -- Session 7 (between client James Kim and therapist Dr. Olivia Lopez)
+    (7, 8, 27, 'Hi Dr. Lopez, I feel overwhelmed by recent life changes.', '2023-07-30 16:30:00'),
+    (7, 27, 8, 'Hello James, major life transitions can be challenging. Let''s talk about them.', '2023-07-30 16:35:00'),
+    (7, 8, 27, 'I need guidance on how to adapt to these changes.', '2023-07-30 16:40:00'),
+    (7, 27, 8, 'We''ll work together to help you cope and adjust.', '2023-07-30 16:45:00'),
+
+    -- Session 8 (between client Sophie Nguyen and therapist Dr. Ethan Rodriguez)
+    (8, 9, 28, 'Hi Dr. Rodriguez, my anxiety and panic attacks are becoming more frequent.', '2023-07-30 17:00:00'),
+    (8, 28, 9, 'Hello Sophie, I''m here to support you in managing anxiety. Let''s explore coping techniques.', '2023-07-30 17:05:00'),
+    (8, 9, 28, 'I want to find ways to prevent panic attacks.', '2023-07-30 17:10:00'),
+    (8, 28, 9, 'We''ll work on strategies to reduce panic triggers.', '2023-07-30 17:15:00'),
+
+    -- Session 9 (between client Alexander Garcia and therapist Dr. Amelia Wilson)
+    (9, 10, 29, 'Hi Dr. Wilson, I''m still struggling with the loss of my loved one.', '2023-07-30 18:00:00'),
+    (9, 29, 10, 'Hello Alexander, grief can take time to process. We''ll work through this journey together.', '2023-07-30 18:05:00'),
+    (9, 10, 29, 'I feel guilty for not being able to cope better.', '2023-07-30 18:10:00'),
+    (9, 29, 10, 'It''s normal to have those feelings. We''ll address them in our sessions.', '2023-07-30 18:15:00'),
+
+    -- Session 10 (between client Ava Martinez and therapist Dr. James Gomez)
+    (10, 11, 30, 'Hi Dr. Gomez, I''m struggling with interpersonal relationships.', '2023-07-30 19:00:00'),
+    (10, 30, 11, 'Hello Ava, relationships can be complex. Let''s explore ways to improve them.', '2023-07-30 19:05:00'),
+    (10, 11, 30, 'I tend to avoid conflict, and it affects my relationships.', '2023-07-30 19:10:00'),
+    (10, 30, 11, 'We''ll work on assertiveness skills and addressing conflict constructively.', '2023-07-30 19:15:00'),
+
+    -- Session 11 (between client Liam Lopez and therapist Dr. Emily Garcia)
+    (11, 12, 25, 'Hi Dr. Garcia, my anger issues are causing problems in my personal life.', '2023-07-30 20:00:00'),
+    (11, 25, 12, 'Hello Liam, managing anger can lead to healthier relationships. Let''s work on it.', '2023-07-30 20:05:00'),
+    (11, 12, 25, 'I need to find better ways to express my emotions.', '2023-07-30 20:10:00'),
+    (11, 25, 12, 'We''ll explore coping mechanisms to express emotions effectively.', '2023-07-30 20:15:00'),
+
+    -- Session 12 (between client Isabella Torres and therapist Dr. Jennifer Brown)
+    (12, 13, 23, 'Hi Dr. Brown, I struggle with self-confidence and self-esteem.', '2023-07-30 21:00:00'),
+    (12, 23, 13, 'Hello Isabella, building self-confidence is a process. Let''s work on it together.', '2023-07-30 21:05:00'),
+    (12, 13, 23, 'I feel like I''m not good enough in various aspects of my life.', '2023-07-30 21:10:00'),
+    (12, 23, 13, 'We''ll address those feelings and focus on your strengths.', '2023-07-30 21:15:00'),
+
+    -- Session 13 (between client Benjamin Rivera and therapist Dr. David Thomas)
+    (13, 14, 24, 'Hi Dr. Thomas, I''m uncertain about my career choices.', '2023-07-30 22:00:00'),
+    (13, 24, 14, 'Hello Benjamin, career decisions can be challenging. Let''s explore your interests and goals.', '2023-07-30 22:05:00'),
+    (13, 14, 24, 'I feel pressured to make the right decision.', '2023-07-30 22:10:00'),
+    (13, 24, 14, 'We''ll work together to make an informed choice that aligns with your values.', '2023-07-30 22:15:00'),
+
+    -- Session 14 (between client Mia Perez and therapist Dr. Sarah Johnson)
+    (14, 15, 21, 'Hi Dr. Johnson, my social anxiety is making it hard to connect with others.', '2023-07-30 23:00:00'),
+    (14, 21, 15, 'Hello Mia, social anxiety is common. Let''s explore strategies to ease social interactions.', '2023-07-30 23:05:00'),
+    (14, 15, 21, 'I avoid social situations because of my anxiety.', '2023-07-30 23:10:00'),
+    (14, 21, 15, 'We''ll work on exposure techniques to gradually overcome avoidance.', '2023-07-30 23:15:00'),
+
+    -- Session 15 (between client Ethan Gomez and therapist Dr. Michael Smith)
+    (15, 16, 22, 'Hi Dr. Smith, I''m struggling to manage stress and time effectively.', '2023-07-31 09:00:00'),
+    (15, 22, 16, 'Hello Ethan, stress and time management are crucial skills. Let''s develop strategies.', '2023-07-31 09:05:00'),
+    (15, 16, 22, 'I often feel overwhelmed with my workload.', '2023-07-31 09:10:00'),
+    (15, 22, 16, 'We''ll prioritize tasks and implement relaxation techniques to manage stress.', '2023-07-31 09:15:00'),
+
+    -- Session 16 (between client Amelia Diaz and therapist Dr. Emily Garcia)
+    (16, 17, 25, 'Hi Dr. Garcia, my fear of public speaking hinders my career growth.', '2023-07-31 10:00:00'),
+    (16, 25, 17, 'Hello Amelia, public speaking anxiety is common. We can work on desensitization.', '2023-07-31 10:05:00'),
+    (16, 17, 25, 'I want to feel more confident during presentations.', '2023-07-31 10:10:00'),
+    (16, 25, 17, 'We''ll practice public speaking and use relaxation techniques to boost confidence.', '2023-07-31 10:15:00'),
+
+    -- Session 17 (between client Oliver Martin and therapist Dr. William Martinez)
+    (17, 18, 26, 'Hi Dr. Martinez, my depression is affecting my daily life.', '2023-07-31 11:00:00'),
+    (17, 26, 18, 'Hello Oliver, depression can be challenging. Let''s explore coping strategies.', '2023-07-31 11:05:00'),
+    (17, 18, 26, 'I often feel hopeless and lack energy.', '2023-07-31 11:10:00'),
+    (17, 26, 18, 'We''ll address those feelings and work on activities that boost mood.', '2023-07-31 11:15:00'),
+
+    -- Session 18 (between client Harper Rodriguez and therapist Dr. Olivia Lopez)
+    (18, 19, 27, 'Hi Dr. Lopez, I struggle with decision-making.', '2023-07-31 12:00:00'),
+    (18, 27, 19, 'Hello Harper, decision-making challenges can be worked through. Let''s begin.', '2023-07-31 12:05:00'),
+    (18, 19, 27, 'I fear making the wrong choices.', '2023-07-31 12:10:00'),
+    (18, 27, 19, 'We''ll explore strategies to overcome decision-making anxiety.', '2023-07-31 12:15:00'),
+
+    -- Session 19 (between client Evelyn Wilson and therapist Dr. Ethan Rodriguez)
+    (19, 20, 28, 'Hi Dr. Rodriguez, I want to improve my assertiveness and set boundaries.', '2023-07-31 13:00:00'),
+    (19, 28, 20, 'Hello Evelyn, assertiveness can enhance communication. Let''s begin.', '2023-07-31 13:05:00'),
+    (19, 20, 28, 'I find it difficult to say "no" to others.', '2023-07-31 13:10:00'),
+    (19, 28, 20, 'We''ll practice assertive communication and boundary-setting techniques.', '2023-07-31 13:15:00');
+
+-- @block Therapist Credentials Table
+INSERT INTO Credentials (therapist_id, qualification, issuing_institution, completion_year)
+VALUES
+    (1, 'Ph.D. in Psychology', 'University of XYZ', 2012),
+    (2, 'M.A. in Counseling Psychology', 'ABC Institute', 2010),
+    (3, 'Psy.D. in Clinical Psychology', 'University of LMN', 2008),
+    (4, 'M.S. in Mental Health Counseling', 'PQR University', 2015),
+    (5, 'Ph.D. in Counseling Psychology', 'DEF Institute', 2017),
+    (6, 'M.A. in Counseling', 'GHI University', 2014),
+    (7, 'Psy.D. in Clinical Psychology', 'MNO Institute', 2016),
+    (8, 'M.S. in Marriage and Family Therapy', 'STU University', 2013),
+    (9, 'Ph.D. in Psychology', 'VWX Institute', 2011),
+    (10, 'M.A. in Counseling Psychology', 'YZA University', 2009);
+
+-- @block Therapist Languages Table
+INSERT INTO Languages (therapist_id, language)
+VALUES
+    (1, 'English'),
+    (1, 'Spanish'),
+    (2, 'English'),
+    (3, 'English'),
+    (3, 'French'),
+    (4, 'English'),
+    (4, 'Portuguese'),
+    (5, 'English'),
+    (6, 'English'),
+    (6, 'Spanish'),
+    (7, 'English'),
+    (8, 'English'),
+    (8, 'Spanish'),
+    (9, 'English'),
+    (9, 'German'),
+    (10, 'English');
+
+
+-- PART 3: INFORMATION FOR DASHBOARDS
+
+-- @block Therapist Overview
+SELECT id, first_name, last_name, email, registration_date
+FROM Therapists;
+
+-- @block Client Overview
+SELECT id, first_name, last_name, email
+FROM Clients;
+
+-- @block Therapist Availability Overview
+SELECT CONCAT(t.first_name, ' ', t.last_name) AS therapist_name, 
+       a.day_of_week,
+       TIME_FORMAT(a.start_time, '%H:%i') AS start_time,
+       TIME_FORMAT(a.end_time, '%H:%i') AS end_time
+FROM Therapists t
+JOIN Availability a ON t.id = a.therapist_id;
+
+-- @block Therapist Languages
+SELECT t.first_name AS therapist_first_name, l.language
+FROM Languages l
+JOIN Therapists t ON l.therapist_id = t.id;
+
+-- @block Client Activity
+SELECT c.first_name AS client_first_name, COUNT(*) AS total_sessions
+FROM Sessions s
+JOIN Clients c ON s.client_id = c.id
+GROUP BY c.id;
+
+-- @block Client Reviews
+SELECT c.first_name AS client_first_name, t.first_name AS therapist_first_name, rating, review_text, date
+FROM ClientReviews cr
+JOIN Clients c ON cr.client_id = c.id
+JOIN Therapists t ON cr.therapist_id = t.id;
+
+-- @block Session Notes Overview
+SELECT s.id AS session_id,
+       t.first_name AS therapist_first_name,
+       c.first_name AS client_first_name,
+       sn.notes_text,
+       sn.therapist_private_notes
+FROM SessionNotes sn
+JOIN Sessions s ON sn.session_id = s.id
+JOIN Therapists t ON s.therapist_id = t.id
+JOIN Clients c ON s.client_id = c.id;
+
+-- @block Therapist Credentials Overview
+SELECT t.first_name AS therapist_first_name,
+       c.qualification,
+       c.issuing_institution,
+       c.completion_year
+FROM Therapists t
+JOIN Credentials c ON t.id = c.therapist_id;
+
+-- @block Therapist Activity
+SELECT t.first_name AS therapist_first_name, COUNT(*) AS total_sessions
+FROM Sessions s
+JOIN Therapists t ON s.therapist_id = t.id
+GROUP BY t.id;
+
+-- @block Therapist Session Summary
+SELECT t.first_name AS therapist_first_name,
+       COUNT(s.id) AS total_sessions,
+       SUM(IF(s.if_happened, 1, 0)) AS completed_sessions,
+       SUM(IF(s.if_happened = 0, 1, 0)) AS canceled_sessions
+FROM Therapists t
+LEFT JOIN Sessions s ON t.id = s.therapist_id
+GROUP BY t.id;
+
+-- @block Payment Transactions
+SELECT pt.id, s.date AS session_date, c.first_name AS client_first_name, t.first_name AS therapist_first_name, pt.amount
+FROM PaymentTransactions pt
+JOIN Sessions s ON pt.session_id = s.id
+JOIN Clients c ON pt.client_id = c.id
+JOIN Therapists t ON pt.therapist_id = t.id;
+
+-- @block Payment Overview
+SELECT
+    SUM(amount) AS total_revenue,
+    COUNT(DISTINCT client_id) AS unique_clients,
+    COUNT(DISTINCT therapist_id) AS unique_therapists,
+    COUNT(DISTINCT session_id) AS total_sessions
+FROM PaymentTransactions;
+
